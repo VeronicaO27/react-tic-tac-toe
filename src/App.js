@@ -31,28 +31,36 @@ const App = () => {
   // This starts state off as a 2D array of JS objects with
   // empty value and unique ids.
   const [squares, setSquares] = useState(generateSquares());
-
-  const [player, setPlayer] = useState('x');
+  const [player, setPlayer] = useState(playerOne);
+  const [winner, setWinner] = useState(null);
+  const [reset, setRest] = useState()
  
 
   const onClickCallback = (id) => {
-    console.log("Squares", squares);
+    console.log('Squares', squares);
     const updatedSquares = squares.map((square) => {
       for (const nestedSquare of square){
         if (nestedSquare.id === id){
-          nestedSquare.value = player;
+          if (nestedSquare.value === ''){
+            nestedSquare.value = player;
+          }
         }
       }
       return square;
     });
-    if (player === 'x'){
-      setPlayer('o');
+    if (player === playerOne){
+      setPlayer(playerTwo);
     } else {
-      setPlayer('x');
+      setPlayer(playerOne);
     }
     
     setSquares(updatedSquares);
+    checkForWinner();
+    console.log(checkForWinner());
+    setWinner(checkForWinner());
   };
+
+ 
   //  create conditional that will alternate between if player is x or O
 
   
@@ -64,6 +72,8 @@ const App = () => {
 
   const checkForWinner = () => {
     let i = 0;
+
+
 
     // Check all the rows and columns for a winner
     while (i < 3) {
@@ -104,14 +114,15 @@ const App = () => {
   };
 
   const resetGame = () => {
-    // Complete in Wave 4
+    setSquares(generateSquares());
+
   };
 
     return (
     <div className='App'>
       <header className='App-header'>
         <h1>React Tic Tac Toe</h1>
-        <h2>The winner is ... -- Fill in for wave 3 </h2>
+        <h2>Winner is {winner}</h2>
         <button>Reset Game</button>
       </header>
       <main>
