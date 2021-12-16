@@ -33,7 +33,7 @@ const App = () => {
   const [squares, setSquares] = useState(generateSquares());
   const [player, setPlayer] = useState(playerOne);
   const [winner, setWinner] = useState(null);
-  const [reset, setRest] = useState()
+  // const [reset, setRest] = useState()
  
 
   const onClickCallback = (id) => {
@@ -115,6 +115,9 @@ const App = () => {
 
   const resetGame = () => {
     setSquares(generateSquares());
+    setPlayer(playerOne);
+    setWinner(null);
+
 
   };
 
@@ -123,7 +126,7 @@ const App = () => {
       <header className='App-header'>
         <h1>React Tic Tac Toe</h1>
         <h2>Winner is {winner}</h2>
-        <button>Reset Game</button>
+        <button onClick={resetGame}>Reset Game</button>
       </header>
       <main>
         <Board squares={squares} onClickCallback={onClickCallback} />
