@@ -3,8 +3,10 @@ import './App.css';
 
 import Board from './components/Board';
 
-const player_1 = 'X';
-const player_2 = 'O';
+const playerOne = 'x';
+const playerTwo = 'o';
+
+// create a current_player_value using state and keeps track of alternating players <= 9 times.
 
 const generateSquares = () => {
   const squares = [];
@@ -29,6 +31,31 @@ const App = () => {
   // This starts state off as a 2D array of JS objects with
   // empty value and unique ids.
   const [squares, setSquares] = useState(generateSquares());
+
+  const [player, setPlayer] = useState('x');
+ 
+
+  const onClickCallback = (id) => {
+    console.log("Squares", squares);
+    const updatedSquares = squares.map((square) => {
+      for (const nestedSquare of square){
+        if (nestedSquare.id === id){
+          nestedSquare.value = player;
+        }
+      }
+      return square;
+    });
+    if (player === 'x'){
+      setPlayer('o');
+    } else {
+      setPlayer('x');
+    }
+    
+    setSquares(updatedSquares);
+  };
+  //  create conditional that will alternate between if player is x or O
+
+  
 
   // Wave 2
   // You will need to create a method to change the square
@@ -80,7 +107,7 @@ const App = () => {
     // Complete in Wave 4
   };
 
-  return (
+    return (
     <div className='App'>
       <header className='App-header'>
         <h1>React Tic Tac Toe</h1>
@@ -88,7 +115,7 @@ const App = () => {
         <button>Reset Game</button>
       </header>
       <main>
-        <Board squares={squares} />
+        <Board squares={squares} onClickCallback={onClickCallback} />
       </main>
     </div>
   );
